@@ -11,6 +11,21 @@
  * @package    Coin_Hive
  * @subpackage Coin_Hive/admin/partials
  */
-?>
+
+function renderForm()
+{
+    settings_fields('pluginPage');
+    do_settings_sections('pluginPage');
+    submit_button();
+}
+
+;?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+	<form action='options.php' method='post'>
+
+		<h2>Coin Hive</h2>
+
+		<?php renderForm();?>
+
+	</form>

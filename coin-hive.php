@@ -73,7 +73,7 @@ require plugin_dir_path(__FILE__) . 'includes/class-coin-hive.php';
 function runCoinHive()
 {
 
-    $plugin = new Coin_Hive();
+    $plugin = new CoinHive();
     $plugin->run();
 
 }
