@@ -101,6 +101,9 @@ class CoinHivePublic
      */
     public function coinHiveFooter()
     {
+        $options = get_option('coin_hive_background_mining_settings');
+        $visitor_warning = $options['visitor_warning'];
+        $opt_out_enabled = $options['opt_out'];
         require_once plugin_dir_path(__FILE__) . 'partials/coin-hive-public-display.php';
     }
 
