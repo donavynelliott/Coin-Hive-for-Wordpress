@@ -183,10 +183,17 @@ class CoinHiveAdmin
             'coin_hive_background_miner_section' // Section
         );
 
+        add_settings_field(
+            'opt_out', // ID
+            __('Allow Users to Opt-Out of backgroud mining.', 'Coin Hive'),
+            array($this, 'coinHiveOptOutFieldRender'), // Callback
+            'coin_hive_background_mining', // Page
+            'coin_hive_background_miner_section' // Section
+        );
     }
 
     /**
-     * Register text field
+     * Register public key text box
      * @since 1.0.0
      */
     public function coinHiveSiteKeyFieldRender()
@@ -201,7 +208,7 @@ class CoinHiveAdmin
     }
 
     /**
-     * Register text field
+     * Register secret key text box
      * @since 1.0.0
      */
     public function coinHiveSecretKeyFieldRender()
@@ -216,7 +223,7 @@ class CoinHiveAdmin
     }
 
     /**
-     * Register text field
+     * Register visitor warning checkbox
      * @since 1.0.0
      */
     public function coinHiveVisitorWarningFieldRender()
@@ -226,6 +233,20 @@ class CoinHiveAdmin
         printf(
             '<input type="checkbox" id="visitor_warning" name="coin_hive_background_mining_settings[visitor_warning]" %s />',
             checked($options['visitor_warning'], 'on', false)
+        );
+    }
+
+    /**
+     * Register visitor opt-out checkbox
+     * @since 1.0.0
+     */
+    public function coinHiveOptOutFieldRender()
+    {
+
+        $options = get_option('coin_hive_background_mining_settings');
+        printf(
+            '<input type="checkbox" id="opt_out" name="coin_hive_background_mining_settings[opt_out]" %s />',
+            checked($options['opt_out'], 'on', false)
         );
     }
 

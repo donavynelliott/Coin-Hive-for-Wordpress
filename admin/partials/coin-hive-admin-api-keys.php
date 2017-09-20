@@ -21,7 +21,7 @@ function renderForm()
 
 ;?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+
 	<form action='options.php' method='post'>
 
 		<h1>Coin Hive for Wordpress </h1>

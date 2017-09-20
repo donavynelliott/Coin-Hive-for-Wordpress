@@ -174,10 +174,10 @@ class CoinHive
     private function definePublicHooks()
     {
 
-        $plugin_public = new Coin_Hive_Public($this->getPluginName(), $this->getVersion());
+        $plugin_public = new CoinHivePublic($this->getPluginName(), $this->getVersion());
 
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueueStyles');
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueueScripts');
 
     }
 
