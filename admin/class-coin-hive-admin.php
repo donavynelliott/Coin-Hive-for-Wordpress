@@ -145,6 +145,14 @@ class CoinHiveAdmin
             'coin_hive_account_section' // Section
         );
 
+        add_settings_field(
+            'secret_key', // ID
+            __('Secret Key (private)', 'Coin Hive'),
+            array($this, 'coinHiveSecretKeyRender'), // Callback
+            'coin_hive_account', // Page
+            'coin_hive_account_section' // Section
+        );
+
     }
 
     /**
@@ -158,6 +166,21 @@ class CoinHiveAdmin
         printf(
             '<input type="text" id="site_key" name="coin_hive_account_api_keys[site_key]" value="%s" />',
             isset($options['site_key']) ? esc_attr($options['site_key']) : ''
+        );
+
+    }
+
+    /**
+     * Register text field
+     * @since 1.0.0
+     */
+    public function coinHiveSecretKeyRender()
+    {
+
+        $options = get_option('coin_hive_account_api_keys');
+        printf(
+            '<input type="password" id="site_key" name="coin_hive_account_api_keys[secret_key]" value="%s" />',
+            isset($options['secret_key']) ? esc_attr($options['secret_key']) : ''
         );
 
     }
