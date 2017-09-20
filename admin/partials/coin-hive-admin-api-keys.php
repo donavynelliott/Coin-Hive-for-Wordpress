@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Provide a admin area view for the plugin
+ * The view for updating your api keys
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
@@ -24,7 +24,7 @@ function renderForm()
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 	<form action='options.php' method='post'>
 
-		<h1>Coin Hive for Wordpress</h1>
+		<h1>Coin Hive for Wordpress </h1>
 
 		<?php renderForm();?>
 

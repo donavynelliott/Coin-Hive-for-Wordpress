@@ -115,7 +115,8 @@ class CoinHiveAdmin
 
     public function coinHiveAddAdminMenu()
     {
-        add_menu_page('Coin Hive', 'Coin Hive', 'manage_options', 'coin_hive', array($this, 'coinHiveOptionsPage'));
+        add_menu_page('Coin Hive', 'Coin Hive', 'manage_options', 'coin_hive', array($this, 'coinHiveAPIKeysPage'));
+        add_submenu_page('coin_hive', 'Background Miner', 'Background Miner', 'manage_options', 'background-miner', array($this, 'coinHiveBackgroundMinerPage'));
     }
 
     /**
@@ -124,6 +125,10 @@ class CoinHiveAdmin
      */
     public function coinHiveSettingsInit()
     {
+        /**
+         * API Keys settings
+         */
+
         register_setting(
             'coin_hive_account', // Option group
             'coin_hive_account_api_keys', // Option name
@@ -133,14 +138,14 @@ class CoinHiveAdmin
         add_settings_section(
             'coin_hive_account_section', // ID
             'Connect your Coin Hive Account', // Title
-            array($this, 'coinHiveSettingsSectionCallback'), // Callback
+            array($this, 'coinHiveAPIKeysSettingsSectionCallback'), // Callback
             'coin_hive_account' // Page
         );
 
         add_settings_field(
             'site_key', // ID
             __('Site Key (public)', 'Coin Hive'),
-            array($this, 'coinHiveSiteKeyRender'), // Callback
+            array($this, 'coinHiveSiteKeyFieldRender'), // Callback
             'coin_hive_account', // Page
             'coin_hive_account_section' // Section
         );
@@ -148,9 +153,34 @@ class CoinHiveAdmin
         add_settings_field(
             'secret_key', // ID
             __('Secret Key (private)', 'Coin Hive'),
-            array($this, 'coinHiveSecretKeyRender'), // Callback
+            array($this, 'coinHiveSecretKeyFieldRender'), // Callback
             'coin_hive_account', // Page
             'coin_hive_account_section' // Section
+        );
+
+        /**
+         * Background Mining Settings
+         */
+
+        register_setting(
+            'coin_hive_background_mining', // Option group
+            'coin_hive_background_mining_settings', // Option name
+            array($this, 'sanitize') // Sanitize
+        );
+
+        add_settings_section(
+            'coin_hive_background_miner_section', // ID
+            'Embed a Background Miner', // Title
+            array($this, 'coinHiveBackgroundMiningSettingsSectionCallback'), // Callback
+            'coin_hive_background_mining' // Page
+        );
+
+        add_settings_field(
+            'visitor_warning', // ID
+            __('Give Visitors Warning about CPU Mining.', 'Coin Hive'),
+            array($this, 'coinHiveVisitorWarningFieldRender'), // Callback
+            'coin_hive_background_mining', // Page
+            'coin_hive_background_miner_section' // Section
         );
 
     }
@@ -159,7 +189,7 @@ class CoinHiveAdmin
      * Register text field
      * @since 1.0.0
      */
-    public function coinHiveSiteKeyRender()
+    public function coinHiveSiteKeyFieldRender()
     {
 
         $options = get_option('coin_hive_account_api_keys');
@@ -174,7 +204,7 @@ class CoinHiveAdmin
      * Register text field
      * @since 1.0.0
      */
-    public function coinHiveSecretKeyRender()
+    public function coinHiveSecretKeyFieldRender()
     {
 
         $options = get_option('coin_hive_account_api_keys');
@@ -186,31 +216,76 @@ class CoinHiveAdmin
     }
 
     /**
-     * Register options page html
+     * Register text field
+     * @since 1.0.0
      */
-    public function coinHiveOptionsPage()
+    public function coinHiveVisitorWarningFieldRender()
     {
-        require_once plugin_dir_path(__FILE__) . 'partials/coin-hive-admin-display.php';
+
+        $options = get_option('coin_hive_background_mining_settings');
+        printf(
+            '<input type="checkbox" id="visitor_warning" name="coin_hive_background_mining_settings[visitor_warning]" %s />',
+            checked($options['visitor_warning'], 'on', false)
+        );
+    }
+
+    /**
+     * Register api keys settings page
+     * @since 1.0.0
+     */
+    public function coinHiveAPIKeysPage()
+    {
+        require_once plugin_dir_path(__FILE__) . 'partials/coin-hive-admin-api-keys.php';
+    }
+
+    /**
+     * Register api keys settings page
+     * @since 1.0.0
+     */
+    public function coinHiveBackgroundMinerPage()
+    {
+        require_once plugin_dir_path(__FILE__) . 'partials/coin-hive-admin-background-miner.php';
     }
 
     /**
      * Sanitize each setting field as needed
      *
      * @param array $input Contains all settings fields as array keys
+     * @since 1.0.0
+     * @return $input
      */
     public function sanitize($input)
     {
-        return $input;
+        $output = array();
+
+        foreach ($input as $key => $value) {
+            if (isset($input[$key])) {
+                // Strip all HTML and PHP tags and properly handle quoted strings
+                $output[$key] = strip_tags(stripslashes($input[$key]));
+            }
+        }
+
+        return apply_filters('sanitize', $output, $input);
     }
 
     /**
-     * Print the Section text
+     * Print the API Keys Section info
+     * @since 1.0.0
      */
-    public function coinHiveSettingsSectionCallback()
+    public function coinHiveAPIKeysSettingsSectionCallback()
     {
+        $coinHiveApiLink = 'https://coin-hive.com/settings/sites';
+        $coinHiveRegisterLink = 'https://coin-hive.com/account/signup';
+        echo __("Update your Coin Hive <a target=\"_blank\" href=\"${coinHiveApiLink}\">API Keys</a> to start monetizing. Don't have an account yet? <a target=\"_blank\" href=\"${coinHiveRegisterLink}\">Register</a>", 'Coin Hive');
+    }
 
-        echo __('Update your Coin Hive info to start monetizing.', 'Coin Hive');
-
+    /**
+     * Print the Background Mining Section info
+     * @since 1.0.0
+     */
+    public function coinHiveBackgroundMiningSettingsSectionCallback()
+    {
+        echo __("The Coinhive JavaScript Miner lets you embed a Monero miner directly into your website.", 'Coin Hive');
     }
 
 }
