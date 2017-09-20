@@ -42,6 +42,15 @@ class CoinHivePublic
     private $version;
 
     /**
+     * The public site key for coin hive
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      string    $site_key    The current version of this plugin.
+     */
+    private $site_key;
+
+    /**
      * Initialize the class and set its properties.
      *
      * @since    1.0.0
@@ -53,6 +62,9 @@ class CoinHivePublic
 
         $this->plugin_name = $plugin_name;
         $this->version = $version;
+
+        $options = get_option('coin_hive_account_api_keys');
+        $this->site_key = $options['site_key'];
         add_action('wp_footer', array($this, 'coinHiveFooter'));
 
     }
@@ -64,21 +76,7 @@ class CoinHivePublic
      */
     public function enqueueStyles()
     {
-
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in Coin_Hive_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The Coin_Hive_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
-
         wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/coin-hive-public.css', array(), $this->version, 'all');
-
     }
 
     /**
@@ -88,22 +86,12 @@ class CoinHivePublic
      */
     public function enqueueScripts()
     {
+        wp_register_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/coin-hive-public.js', array('jquery'), $this->version, true);
 
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in Coin_Hive_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The Coin_Hive_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
+        wp_localize_script($this->plugin_name, 'coin_hive_site_key', array('site_key' => $this->site_key));
 
         wp_enqueue_script('coin-hive-min', 'https://coin-hive.com/lib/coinhive.min.js', array(), $this->version, true);
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/coin-hive-public.js', array('jquery'), $this->version, true);
-
+        wp_enqueue_script($this->plugin_name);
     }
 
     /**
