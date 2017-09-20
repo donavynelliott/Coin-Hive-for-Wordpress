@@ -53,8 +53,10 @@ class CoinHiveAdmin
 
         $this->plugin_name = $plugin_name;
         $this->version = $version;
-        add_action('admin_menu', array($this, 'coinHiveAddAdminMenu'));
-        add_action('admin_init', array($this, 'coinHiveSettingsInit'));
+        if (is_admin()) {
+            add_action('admin_menu', array($this, 'coinHiveAddAdminMenu'));
+            add_action('admin_init', array($this, 'coinHiveSettingsInit'));
+        }
 
     }
 
@@ -122,21 +124,25 @@ class CoinHiveAdmin
      */
     public function coinHiveSettingsInit()
     {
-        register_setting('settings', 'coin_hive_settings');
+        register_setting(
+            'coin_hive_account', // Option group
+            'coin_hive_account_api_keys', // Option name
+            array($this, 'sanitize') // Sanitize
+        );
 
         add_settings_section(
-            'coin_hive_settings_section',
-            __('Your section description', 'Coin Hive'),
-            'coin_hive_settings_section_callback',
-            'settings'
+            'coin_hive_account_section', // ID
+            'Connect your Coin Hive Account', // Title
+            array($this, 'coinHiveSettingsSectionCallback'), // Callback
+            'coin_hive_account' // Page
         );
 
         add_settings_field(
-            'coin_hive_text_field_0',
-            __('Settings field description', 'Coin Hive'),
-            array($this, 'coin_hive_text_field_0_render'),
-            'settings',
-            'coin_hive_settings_section'
+            'site_key', // ID
+            __('Site Key (public)', 'Coin Hive'),
+            array($this, 'coinHiveSiteKeyRender'), // Callback
+            'coin_hive_account', // Page
+            'coin_hive_account_section' // Section
         );
 
     }
@@ -145,13 +151,14 @@ class CoinHiveAdmin
      * Register text field
      * @since 1.0.0
      */
-    public function coinHiveTextField0Render()
+    public function coinHiveSiteKeyRender()
     {
 
-        $options = get_option('coin_hive_settings');
-        ?>
-		<input type='text' name='coin_hive_settings[coin_hive_text_field_0]' value='<?php echo $options['coin_hive_text_field_0']; ?>'>
-		<?php
+        $options = get_option('coin_hive_account_api_keys');
+        printf(
+            '<input type="text" id="site_key" name="coin_hive_account_api_keys[site_key]" value="%s" />',
+            isset($options['site_key']) ? esc_attr($options['site_key']) : ''
+        );
 
     }
 
@@ -161,6 +168,26 @@ class CoinHiveAdmin
     public function coinHiveOptionsPage()
     {
         require_once plugin_dir_path(__FILE__) . 'partials/coin-hive-admin-display.php';
+    }
+
+    /**
+     * Sanitize each setting field as needed
+     *
+     * @param array $input Contains all settings fields as array keys
+     */
+    public function sanitize($input)
+    {
+        return $input;
+    }
+
+    /**
+     * Print the Section text
+     */
+    public function coinHiveSettingsSectionCallback()
+    {
+
+        echo __('Update your Coin Hive info to start monetizing.', 'Coin Hive');
+
     }
 
 }

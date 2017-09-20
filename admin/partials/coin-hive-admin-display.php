@@ -14,8 +14,8 @@
 
 function renderForm()
 {
-    settings_fields('pluginPage');
-    do_settings_sections('pluginPage');
+    settings_fields('coin_hive_account');
+    do_settings_sections('coin_hive_account');
     submit_button();
 }
 
@@ -24,7 +24,7 @@ function renderForm()
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 	<form action='options.php' method='post'>
 
-		<h2>Coin Hive</h2>
+		<h1>Coin Hive for Wordpress</h1>
 
 		<?php renderForm();?>
 
