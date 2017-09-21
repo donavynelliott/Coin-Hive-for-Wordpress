@@ -18,6 +18,9 @@ This plugin introduces methods for integrating Coin-Hive.com's proprietary javas
 
 == Installation ==
 
+Register at [Coin Hive](https://coin-hive.com/account/signup)
+
+
 1. Upload `coin-hive.php` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Insert your public key through the 'Coin Hive' menu in WordPress
