@@ -1,27 +1,69 @@
 /**
 * TABLE OF CONTENTS
 *
-* - Footer
+* - Coin Hive UI
 * - Checkbox Switch
 * - Media Queries
 */
 
+
 /**
-* Footer
+* Coin Hive UI
 */
 
-#coin-hive-footer {
-	background-color: #3E4B56;
-	color: #fff;
-	margin: 0 auto;
-	position: relative;
-	padding: 0.2em 3em;
-	width: 100%;
+#coin-hive-ui {
+  padding-top: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: -100px;
+  bottom: 0;
+  display: block;
+  float: left;
+  width: 0;
+  max-width: 284px;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #3E4B56;
+  z-index: 1000000;
+
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
 }
 
-#coin-hive-explain {
-	font-weight: 700;
-	color: white;
+#coin-hive-ui > ul {
+  text-align: center;
+  display: block;
+  margin-right: 40px;
+  padding: 0;
+  list-style: none;
+  opacity: .5;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+}
+
+#coin-hive-ui .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#coin-hive-ui a {
+  font-weight: 500;
+  color: #fff;
+}
+
+#coin-hive-ui h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: .4em 0 0;
 }
 
 /**

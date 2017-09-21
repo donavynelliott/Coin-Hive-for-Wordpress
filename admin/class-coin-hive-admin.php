@@ -176,8 +176,16 @@ class CoinHiveAdmin
         );
 
         add_settings_field(
+            'auto_start', // ID
+            __('Start Mining automatically (Not recommended)', 'Coin Hive'),
+            array($this, 'coinHiveAutoStartFieldRender'), // Callback
+            'coin_hive_background_mining', // Page
+            'coin_hive_background_miner_section' // Section
+        );
+
+        add_settings_field(
             'visitor_warning', // ID
-            __('Give Visitors Warning about CPU Mining.', 'Coin Hive'),
+            __('Give Visitors Warning about CPU Mining', 'Coin Hive'),
             array($this, 'coinHiveVisitorWarningFieldRender'), // Callback
             'coin_hive_background_mining', // Page
             'coin_hive_background_miner_section' // Section
@@ -185,7 +193,7 @@ class CoinHiveAdmin
 
         add_settings_field(
             'opt_out', // ID
-            __('Allow Users to Opt-Out of backgroud mining.', 'Coin Hive'),
+            __('Allow Users to Opt-Out of backgroud mining', 'Coin Hive'),
             array($this, 'coinHiveOptOutFieldRender'), // Callback
             'coin_hive_background_mining', // Page
             'coin_hive_background_miner_section' // Section
@@ -220,6 +228,20 @@ class CoinHiveAdmin
             isset($options['secret_key']) ? esc_attr($options['secret_key']) : ''
         );
 
+    }
+
+    /**
+     * Register automatic mining start checkbox
+     * @since 1.0.0
+     */
+    public function coinHiveAutoStartFieldRender()
+    {
+
+        $options = get_option('coin_hive_background_mining_settings');
+        printf(
+            '<input type="checkbox" id="auto_start" name="coin_hive_background_mining_settings[auto_start]" %s />',
+            checked($options['auto_start'], 'on', false)
+        );
     }
 
     /**
