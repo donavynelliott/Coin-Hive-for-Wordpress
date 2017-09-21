@@ -36,7 +36,7 @@ A. The css is explicit as to prevent conflicts between other themes. The button 
 
 == Screenshots ==
 
-![Screenshot of Coin Hive for Wordpress](https://github.com/donavynelliott/Coin-Hive-for-Wordpress/raw/master/screenshots/screenshot-1.png)
+![Screenshot of Coin Hive for Wordpress](screenshots/screenshot-1.png)
 
 == Changelog ==
 
