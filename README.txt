@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Monetize with Coin Hive ===
 Contributors: (commoncence)
 Donate link: http://donavynelliott.com
 Tags: monetization, monero, mining, bitcoin
@@ -21,7 +21,7 @@ This plugin introduces methods for integrating Coin-Hive.com's proprietary javas
 Register at [Coin Hive](https://coin-hive.com/account/signup)
 
 
-1. Upload `coin-hive.php` to the `/wp-content/plugins/` directory
+1. Upload `monetize-with-coin-hive.php` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Insert your public key through the 'Coin Hive' menu in WordPress
 4. Choose your options through 'Coin Hive' -> 'Background Mining' menu
